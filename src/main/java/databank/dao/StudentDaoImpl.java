@@ -17,9 +17,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.ExternalContext;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -31,7 +33,8 @@ import databank.model.StudentPojo;
 /**
  * Description:  Implements the C-R-U-D API for the database
  */
-//TODO don't forget this object is a managed bean with a application scope
+@ManagedBean
+@ApplicationScoped
 public class StudentDaoImpl implements StudentDao, Serializable {
 	/** Explicitly set serialVersionUID */
 	private static final long serialVersionUID = 1L;

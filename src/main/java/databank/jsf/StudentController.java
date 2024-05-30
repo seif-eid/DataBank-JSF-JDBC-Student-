@@ -11,8 +11,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.SessionMap;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import databank.dao.ListDataDao;
 import databank.dao.StudentDao;
@@ -22,8 +25,9 @@ import databank.model.StudentPojo;
  * Description:  Responsible for collection of Student Pojo's in XHTML (list) <h:dataTable> </br>
  * Delegates all C-R-U-D behavior to DAO
  */
-
-//TODO Don't forget this object is a managed bean with a session scope
+@ManagedBean
+@Named("studentController")
+@SessionScoped
 public class StudentController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
