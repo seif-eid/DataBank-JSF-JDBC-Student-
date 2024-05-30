@@ -65,29 +65,32 @@ public class StudentController implements Serializable {
 	}
 
 	public String submitStudent(StudentPojo student) {
-		//TODO Update the student object with current date.  You can use LocalDateTime::now().
-		//TODO Use DAO to insert the student to the database
-		//TODO Do not forget to navigate the user back to list-students.xhtml
-		return null;
+		
+		studentDao.createStudent(student);
+        // Update the student object with the current date
+        // student.setCreated(LocalDateTime.now());
+		return "list-students.xhtml?faces-redirect=true";
+		
 	}
 
 	public String navigateToUpdateForm(int studentId) {
-		//TODO Use DAO to find the student object from the database first
-		//TODO Use session map to keep track of of the object being edited
-		//TODO Do not forget to navigate the user to the edit/update form
-		return null;
+        // Use session map to keep track of the object being edited
+		sessionMap.put("student", studentDao.readStudentById(studentId));
+        // Return the navigation outcome to the edit/update form
+		return "edit-student.xhtml?faces-redirect=true";
 	}
 
 	public String submitUpdatedStudent(StudentPojo student) {
-		//TODO Use DAO to update the student in the database
-		//TODO Do not forget to navigate the user back to list-students.xhtml
-		return null;
+        studentDao.updateStudent(student);
+        // Redirect the user back to list-student.xhtml
+        return "list-students.xhtml?faces-redirect=true";
 	}
 
 	public String deleteStudent(int studentId) {
-		//TODO Use DAO to delete the student from the database
-		//TODO Do not forget to navigate the user back to list-students.xhtml
-		return null;
+		studentDao.deleteStudentById(studentId);
+		// Redirect the user back to list-student.xhtml
+		return "list-students.xhtml?faces-redirect=true";
+		
 	}
 
 }
