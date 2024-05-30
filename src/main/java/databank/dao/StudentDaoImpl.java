@@ -83,7 +83,7 @@ public class StudentDaoImpl implements StudentDao, Serializable {
 			logMsg("closing stmts and connection");
 			readAllPstmt.close();
 			createPstmt.close();
-			//TODO Close other PreparedStatements
+			//Close other PreparedStatements
 			readByIdPstmt.close();
 			updatePstmt.close();
 			deleteByIdPstmt.close();
@@ -118,36 +118,73 @@ public class StudentDaoImpl implements StudentDao, Serializable {
 
 	}
 
+	// insertion of a new student
 	@Override
 	public StudentPojo createStudent(StudentPojo student) {
 		logMsg("creating a student");
-		//TODO Complete the insertion of a new student
-		//TODO Be sure to use try-and-catch statement
-		return null;
+		try {
+			createPstmt.setString(1, student.getLastName());
+			createPstmt.setString(2, student.getFirstName());
+			createPstmt.setString(3, student.getEmail());
+			createPstmt.setString(4, student.getPhoneNumber());
+			createPstmt.setString(5, student.getProgram());
+			createPstmt.execute();
+        } catch (SQLException e) {
+            logMsg("something went wrong accessing database: " + e.getLocalizedMessage());
+        }
+		return student;
 	}
-	
-	
-
+	//retrieval of a specific student by its id
 	@Override
 	public StudentPojo readStudentById(int studentId) {
 		logMsg("read a specific student");
-		//TODO Complete the retrieval of a specific student by its id
-		//TODO Be sure to use try-and-catch statement
+		StudentPojo student = null;
+		try {
+			readByIdPstmt.setInt(1, studentId);
+			ResultSet rs = readByIdPstmt.executeQuery();
+			if (rs.next()) {
+				student = new StudentPojo();
+				student.setId(rs.getInt("id"));
+				student.setLastName(rs.getString("last_name"));
+				student.setFirstName(rs.getString("First_name"));
+				student.setEmail(rs.getString("email"));
+				student.setPhoneNumber(rs.getString("PhoneNumber"));
+				student.setProgram(rs.getString("Program"));
+				return student;
+			}
+		} catch (SQLException e) {
+			logMsg("something went wrong accessing database:  " + e.getLocalizedMessage());
+		}
 		return null;
 	}
-
+	//update of a specific student
 	@Override
 	public void updateStudent(StudentPojo student) {
 		logMsg("updating a specific student");
-		//TODO Complete the update of a specific student
-		//TODO Be sure to use try-and-catch statement
-	}
+		try {
+			updatePstmt.setString(1, student.getLastName());
+			updatePstmt.setString(2, student.getFirstName());
+			updatePstmt.setString(3, student.getEmail());
+			updatePstmt.setString(4, student.getPhoneNumber());
+			updatePstmt.setString(5, student.getProgram());
+			updatePstmt.setInt(6, student.getId());
+			updatePstmt.execute();
+		} catch (SQLException e) {
+			logMsg("something went wrong accessing database: " + e.getLocalizedMessage());
+		}
 
+	}
+	//TODO deletion of a specific student
 	@Override
 	public void deleteStudentById(int studentId) {
 		logMsg("deleting a specific student");
-		//TODO Complete the deletion of a specific student
-		//TODO Be sure to use try-and-catch statement
+		try {
+			deleteByIdPstmt.setInt(1, studentId);
+			deleteByIdPstmt.execute();
+		} catch (SQLException e) {
+			logMsg("something went wrong accessing database:  " + e.getLocalizedMessage());
+		}
+
 	}
 
 }
