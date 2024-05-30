@@ -8,6 +8,7 @@
 package databank.jsf;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +44,18 @@ public class StudentController implements Serializable {
 
 	private List<StudentPojo> students;
 
-	//Necessary methods to make controller work
+    @Inject
+    private StudentPojo newStudent;
 
+	//Necessary methods to make controller work
+    public StudentPojo getnewStudent() {
+        return newStudent;
+    }
+
+    public void setnewStudent(final StudentPojo newStudent) {
+        this.newStudent = newStudent;
+    }
+    
 	public void loadStudents() {
 		setStudents(studentDao.readAllStudents());
 	}
@@ -69,17 +80,22 @@ public class StudentController implements Serializable {
 	}
 
 	public String submitStudent(StudentPojo student) {
+
+		    // Update the student object with the current date
+		    student.setCreated(LocalDateTime.now());
+		    
+		    // Save the student object to the database
+		    studentDao.createStudent(student);
+		    
+		    return "list-students.xhtml?faces-redirect=true";
 		
-		studentDao.createStudent(student);
-        // Update the student object with the current date
-        // student.setCreated(LocalDateTime.now());
-		return "list-students.xhtml?faces-redirect=true";
+
 		
 	}
 
 	public String navigateToUpdateForm(int studentId) {
         // Use session map to keep track of the object being edited
-		sessionMap.put("student", studentDao.readStudentById(studentId));
+		sessionMap.put("existingStudent", studentDao.readStudentById(studentId));
         // Return the navigation outcome to the edit/update form
 		return "edit-student.xhtml?faces-redirect=true";
 	}

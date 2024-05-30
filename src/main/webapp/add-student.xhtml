@@ -17,8 +17,29 @@
   </h:head>
   <h:body>
     <h2>#{uiconsts['addButtonLabel']}</h2>
-    <br/>
-    <p>Create a student here.  You can use "h:panelGrid", "h:outputText", "h:inputText", ""h:selectOneMenu", "f:selectItems", "h:commandButton", "h:form", and "h:outputLink"</p>
-    <p>Add a hyperlink to return to list-students.xhtml</p>
+    <h:form>
+      <h:panelGrid columns="2">
+        <h:outputText value="Last Name:" />
+        <h:inputText value="#{newStudent.lastName}" />
+        
+        <h:outputText value="First Name:" />
+        <h:inputText value="#{newStudent.firstName}" />
+        
+        <h:outputText value="Email:" />
+        <h:inputText value="#{newStudent.email}" />
+        
+        <h:outputText value="Phone Number:" />
+        <h:inputText value="#{newStudent.phoneNumber}" />
+        
+        <h:outputText value="program:" />
+        <h:selectOneMenu value="#{newStudent.program}">
+          <f:selectItems value="#{studentController.getPrograms()}" />
+        </h:selectOneMenu>
+       </h:panelGrid>
+      <h:commandButton value="Create Student" action="#{studentController.submitStudent(newStudent)}" />
+    </h:form>
+    <br /> 
+   <p>Add a hyperlink to return to list-students.xhtml</p>
+  <h:outputLink value="list-students.xhtml">Return to List Students</h:outputLink>
   </h:body>
 </html>

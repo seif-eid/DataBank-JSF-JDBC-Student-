@@ -17,7 +17,7 @@ import databank.model.StudentPojo;
 public interface StudentDao {
 
 	// C
-	public StudentPojo createStudent(StudentPojo student);
+	public void createStudent(StudentPojo student);
 
 	// R
 	public StudentPojo readStudentById(int studentId);

@@ -17,8 +17,32 @@
   </h:head>
   <h:body>
     <h2>#{uiconsts['updateLabel']}</h2>
+     <h:form>
+        <h:panelGrid columns="2">
+            <h:outputText value="ID:" />
+            <h:outputText value="#{existingStudent.id}" style="font-weight: bold;" />
+
+            <h:outputText value="Last Name:" />
+            <h:inputText value="#{existingStudent.lastName}" />
+
+            <h:outputText value="First Name:" />
+            <h:inputText value="#{existingStudent.firstName}" />
+
+            <h:outputText value="Email:" />
+            <h:inputText value="#{existingStudent.email}" />
+
+            <h:outputText value="Phone Number:" />
+            <h:inputText value="#{existingStudent.phoneNumber}" />
+
+            <h:outputText value="Degree:" />
+            <h:selectOneMenu value="#{existingStudent.program}">
+                <f:selectItems value="#{studentController.getPrograms()}" />
+            </h:selectOneMenu>
+        </h:panelGrid>
+
+        <h:commandButton value="Update Student" action="#{studentController.submitUpdatedStudent(existingStudent)}" />
+    </h:form>
     <br/>
-    <p>Update a student here.  You can use "h:panelGrid", "h:outputText", "h:inputText", "h:selectOneMenu", "f:selectItems", "h:commandButton", and "h:form"</p>
     <h:outputLink value="list-students.xhtml">Back</h:outputLink>
   </h:body>
 </html>

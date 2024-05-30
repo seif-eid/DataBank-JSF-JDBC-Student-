@@ -108,8 +108,9 @@ public class StudentDaoImpl implements StudentDao, Serializable {
 				newStudent.setLastName(rs.getString("last_name"));
 				newStudent.setFirstName(rs.getString("First_name"));
 				newStudent.setEmail(rs.getString("email"));
-				newStudent.setPhoneNumber(rs.getString("PhoneNumber"));
-				newStudent.setProgram(rs.getString("Program"));
+				newStudent.setPhoneNumber(rs.getString("phone"));
+				newStudent.setProgram(rs.getString("program"));
+				newStudent.setCreated(rs.getTimestamp("created").toLocalDateTime());
 				students.add(newStudent);
 			}
 			
@@ -123,20 +124,21 @@ public class StudentDaoImpl implements StudentDao, Serializable {
 
 	// insertion of a new student
 	@Override
-	public StudentPojo createStudent(StudentPojo student) {
-		logMsg("creating a student");
-		try {
-			createPstmt.setString(1, student.getLastName());
-			createPstmt.setString(2, student.getFirstName());
-			createPstmt.setString(3, student.getEmail());
-			createPstmt.setString(4, student.getPhoneNumber());
-			createPstmt.setString(5, student.getProgram());
-			createPstmt.execute();
-        } catch (SQLException e) {
-            logMsg("something went wrong accessing database: " + e.getLocalizedMessage());
-        }
-		return student;
+	public void createStudent(StudentPojo student) {
+	    logMsg("creating a student");
+	    try {
+	        createPstmt.setString(1, student.getLastName());
+	        createPstmt.setString(2, student.getFirstName());
+	        createPstmt.setString(3, student.getEmail());
+	        createPstmt.setString(4, student.getPhoneNumber());
+	        createPstmt.setString(5, student.getProgram());
+	        createPstmt.setObject(6, student.getCreated());  // Ensure the created field is set
+	        createPstmt.execute();
+	    } catch (SQLException e) {
+	        logMsg("something went wrong accessing database: " + e.getLocalizedMessage());
+	    }
 	}
+
 	//retrieval of a specific student by its id
 	@Override
 	public StudentPojo readStudentById(int studentId) {
@@ -151,8 +153,9 @@ public class StudentDaoImpl implements StudentDao, Serializable {
 				student.setLastName(rs.getString("last_name"));
 				student.setFirstName(rs.getString("First_name"));
 				student.setEmail(rs.getString("email"));
-				student.setPhoneNumber(rs.getString("PhoneNumber"));
-				student.setProgram(rs.getString("Program"));
+				student.setPhoneNumber(rs.getString("phone"));
+				student.setProgram(rs.getString("program"));
+				student.setCreated(rs.getTimestamp("created").toLocalDateTime());
 				return student;
 			}
 		} catch (SQLException e) {
@@ -177,7 +180,7 @@ public class StudentDaoImpl implements StudentDao, Serializable {
 		}
 
 	}
-	//TODO deletion of a specific student
+	// deletion of a specific student
 	@Override
 	public void deleteStudentById(int studentId) {
 		logMsg("deleting a specific student");
