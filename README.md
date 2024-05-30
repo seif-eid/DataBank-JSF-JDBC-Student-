@@ -1,4 +1,4 @@
-Assume you are hired by ACME Corp. as a programmer.  The company wants you to finish developing their Student Directory web application where users should be able to: 
+Assume i'm hired by ACME Corp. as a programmer.  The company wants you to finish developing their Student Directory web application where users should be able to: 
 1. Create/add a new student
 2. Read/view a list of students
 3. Update/edit an existing student
