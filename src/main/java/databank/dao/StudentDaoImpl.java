@@ -132,7 +132,7 @@ public class StudentDaoImpl implements StudentDao, Serializable {
 	        createPstmt.setString(3, student.getEmail());
 	        createPstmt.setString(4, student.getPhoneNumber());
 	        createPstmt.setString(5, student.getProgram());
-	        createPstmt.setObject(6, student.getCreated());  // Ensure the created field is set
+	        createPstmt.setObject(6, student.getCreated()); 
 	        createPstmt.execute();
 	    } catch (SQLException e) {
 	        logMsg("something went wrong accessing database: " + e.getLocalizedMessage());
